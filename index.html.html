@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🔤 Тренажёр по словообразованию | ULTRA Версия</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --primary-glow: rgba(99, 102, 241, 0.5);
+      --success: #10b981;
+      --success-light: #34d399;
+      --success-glow: rgba(16, 185, 129, 0.5);
+      --error: #ef4444;
+      --error-light: #f87171;
+      --error-glow: rgba(239, 68, 68, 0.5);
+      --warning: #f59e0b;
+      --warning-light: #fbbf24;
+      --warning-glow: rgba(245, 158, 11, 0.5);
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-light: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #475569;
+      --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+      --gradient-2: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+      --gradient-3: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+      --gradient-gold: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+      --radius-sm: 8px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      background-image: 
+        radial-gradient(ellipse at top, #1e1b4b 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, #1e1b4b 0%, transparent 50%),
+        radial-gradient(ellipse at center, #1e293b 0%, transparent 70%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Animated Background */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: particleFloat 15s infinite;
+    }
+
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: var(--gradient-1);
+      filter: blur(150px);
+      opacity: 0.2;
+      z-index: -1;
+      animation: headerGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes headerGlow {
+      0%, 100% { opacity: 0.2; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.3; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .logo {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      animation: logoFloat 3s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--bg-card-light);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+
+    .badge:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .badge.gold { 
+      background: var(--gradient-gold); 
+      border: none; 
+      color: #000;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+    
+    .badge.green { 
+      background: var(--gradient-2); 
+      border: none; 
+      color: #000;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    .badge.purple {
+      background: var(--gradient-1);
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 18px;
+      background: var(--bg-card-light);
+      border-radius: var(--radius);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: block;
+      transition: all 0.3s;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-top: 5px;
+    }
+
+    .stat-card.correct .stat-value { color: var(--success-light); }
+    .stat-card.incorrect .stat-value { color: var(--error-light); }
+    .stat-card.streak .stat-value { color: var(--warning-light); }
+    .stat-card.current .stat-value { color: var(--primary-light); }
+
+    /* Progress */
+    .progress-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .progress-label {
+      font-weight: 700;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-percent {
+      font-weight: 800;
+      color: var(--primary-light);
+      font-size: 1.2rem;
+      background: rgba(99, 102, 241, 0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .progress-track {
+      height: 14px;
+      background: var(--bg-card-light);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-1);
+      border-radius: 10px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      background: var(--bg-card);
+      padding: 10px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 100px;
+      padding: 14px 20px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--gradient-1);
+      transition: width 0.3s;
+    }
+
+    .tab-btn:hover {
+      background: var(--bg-card-light);
+      color: var(--text-primary);
+    }
+
+    .tab-btn:hover::before {
+      width: 80%;
+    }
+
+    .tab-btn.active {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .tab-btn.active::before {
+      width: 0;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: tabFadeIn 0.4s ease; }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Question Box */
+    .question-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 35px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .question-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--gradient-1);
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .question-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%);
+      animation: questionPulse 4s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes questionPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      background: var(--bg-card-light);
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      margin-bottom: 25px;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sentence {
+      font-size: 1.4rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+      padding: 30px;
+      background: var(--bg-card-light);
+      border-radius: var(--radius);
+      border-left: 5px solid var(--primary);
+      position: relative;
+      z-index: 1;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .gap {
+      display: inline-block;
+      min-width: 150px;
+      border-bottom: 3px dashed var(--primary-light);
+      margin: 0 8px;
+      padding-bottom: 5px;
+      color: var(--text-muted);
+      position: relative;
+    }
+
+    .gap::after {
+      content: '?';
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .translation {
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+      font-size: 1.05rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Answer Input */
+    .answer-input {
+      width: 100%;
+      padding: 20px 28px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25), 0 0 30px var(--primary-glow);
+      transform: translateY(-2px);
+    }
+
+    .answer-input.correct {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      animation: inputPulseGreen 0.6s;
+      box-shadow: 0 0 30px var(--success-glow);
+    }
+
+    .answer-input.incorrect {
+      border-color: var(--error);
+      background: rgba(239, 68, 68, 0.1);
+      animation: inputShake 0.6s;
+      box-shadow: 0 0 30px var(--error-glow);
+    }
+
+    @keyframes inputShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    @keyframes inputPulseGreen {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      50% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+    }
+
+    /* Feedback */
+    .feedback {
+      padding: 18px 24px;
+      border-radius: var(--radius);
+      margin-bottom: 25px;
+      display: none;
+      animation: feedbackSlideIn 0.4s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feedback.show { display: block; }
+
+    @keyframes feedbackSlideIn {
+      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .feedback.correct {
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--success);
+      color: var(--success-light);
+      box-shadow: 0 4px 20px var(--success-glow);
+    }
+
+    .feedback.incorrect {
+      background: rgba(239, 68, 68, 0.15);
+      border: 2px solid var(--error);
+      color: var(--error-light);
+      box-shadow: 0 4px 20px var(--error-glow);
+    }
+
+    .feedback-title {
+      font-weight: 800;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+
+    .feedback-explanation {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    button {
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:active::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none !important;
+      filter: grayscale(0.7);
+    }
+
+    button:not(:disabled):hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    button:not(:disabled):active {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      box-shadow: 0 8px 30px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card-light);
+      color: var(--text-primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--border);
+      border-color: var(--text-secondary);
+    }
+
+    .btn-success {
+      background: var(--gradient-2);
+      color: white;
+      box-shadow: 0 4px 20px var(--success-glow);
+    }
+
+    .btn-success:hover:not(:disabled) {
+      box-shadow: 0 8px 30px var(--success-glow);
+    }
+
+    .btn-warning {
+      background: var(--gradient-3);
+      color: white;
+      box-shadow: 0 4px 20px var(--warning-glow);
+    }
+
+    .btn-warning:hover:not(:disabled) {
+      box-shadow: 0 8px 30px var(--warning-glow);
+    }
+
+    .btn-hidden { 
+      display: none !important; 
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .btn-visible { 
+      display: flex !important; 
+      visibility: visible;
+      pointer-events: auto;
+      animation: buttonPopIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes buttonPopIn {
+      0% { opacity: 0; transform: scale(0.5); }
+      70% { transform: scale(1.1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Timer */
+    .timer-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 15px 25px;
+      background: var(--bg-card-light);
+      border-radius: var(--radius);
+      margin-bottom: 25px;
+      border: 2px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .timer-display {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--warning-light);
+      text-shadow: 0 0 20px var(--warning-glow);
+    }
+
+    .timer-warning {
+      animation: timerPulse 0.8s infinite;
+      color: var(--error-light);
+      text-shadow: 0 0 20px var(--error-glow);
+    }
+
+    @keyframes timerPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    /* Encouragement */
+    .encouragement {
+      text-align: center;
+      padding: 25px;
+      margin: 25px 0;
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: var(--radius-lg);
+      border: 2px solid rgba(99, 102, 241, 0.4);
+      display: none;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+
+    .encouragement.show {
+      display: block;
+      animation: encouragementBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes encouragementBounce {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .encouragement-emoji {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      animation: emojiDance 1s infinite;
+    }
+
+    @keyframes emojiDance {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    .encouragement-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    /* Results Screen */
+    .results-screen {
+      text-align: center;
+      padding: 50px 30px;
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .results-screen::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+      animation: resultsPulse 5s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes resultsPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .results-screen.show {
+      display: block;
+      animation: resultsFadeIn 0.6s ease;
+    }
+
+    @keyframes resultsFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .results-emoji {
+      font-size: 5rem;
+      margin-bottom: 25px;
+      animation: emojiFloat 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes emojiFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .results-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
+    }
+
+    .results-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 35px;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin: 35px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .result-card {
+      background: var(--bg-card-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 30px 20px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .result-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .result-card:hover::before {
+      opacity: 1;
+    }
+
+    .result-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .result-value {
+      font-size: 3rem;
+      font-weight: 900;
+      display: block;
+      margin-bottom: 8px;
+      text-shadow: 0 0 30px currentColor;
+    }
+
+    .result-label {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .result-card.correct .result-value { color: var(--success-light); }
+    .result-card.incorrect .result-value { color: var(--error-light); }
+    .result-card.percent .result-value { color: var(--warning-light); }
+    .result-card.time .result-value { color: var(--primary-light); }
+
+    .results-message {
+      font-size: 1.25rem;
+      padding: 25px;
+      background: var(--bg-card-light);
+      border-radius: var(--radius);
+      margin: 30px 0;
+      border-left: 5px solid var(--primary);
+      position: relative;
+      z-index: 1;
+      line-height: 1.7;
+    }
+
+    .results-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .results-actions button {
+      min-width: 200px;
+    }
+
+    /* Dictionary */
+    .search-box {
+      width: 100%;
+      padding: 18px 24px;
+      margin-bottom: 25px;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--border);
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-size: 1.05rem;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    .dictionary-list {
+      max-height: 550px;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+    }
+
+    .dict-item {
+      padding: 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s;
+      border-radius: var(--radius);
+      margin-bottom: 5px;
+    }
+
+    .dict-item:hover {
+      background: var(--bg-card-light);
+      transform: translateX(5px);
+    }
+
+    .dict-item:last-child { border-bottom: none; }
+
+    .dict-left {
+      flex: 1;
+    }
+
+    .dict-word {
+      font-weight: 800;
+      color: var(--primary-light);
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+      text-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .dict-type {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      background: var(--bg-card-light);
+      border-radius: 6px;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .dict-right {
+      text-align: right;
+      flex: 1;
+    }
+
+    .dict-translation {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .dict-example {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    .dict-learned {
+      color: var(--success-light);
+      font-size: 1.4rem;
+      text-shadow: 0 0 10px var(--success-glow);
+    }
+
+    /* Rules Section */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .rule-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rule-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-1);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .rule-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .rule-card:hover::before {
+      opacity: 1;
+    }
+
+    .rule-title {
+      font-weight: 800;
+      color: var(--primary-light);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+    }
+
+    .rule-content {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .rule-example {
+      margin-top: 15px;
+      padding: 15px;
+      background: var(--bg-card-light);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      border-left: 4px solid var(--warning);
+      line-height: 1.9;
+    }
+
+    /* Achievements */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 18px;
+    }
+
+    .achievement-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 25px 18px;
+      text-align: center;
+      transition: all 0.3s;
+      opacity: 0.4;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .achievement-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-gold);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .achievement-card.unlocked {
+      opacity: 1;
+      border-color: var(--warning);
+      box-shadow: 0 0 25px var(--warning-glow);
+    }
+
+    .achievement-card.unlocked::before {
+      opacity: 0.1;
+    }
+
+    .achievement-card.unlocked:hover {
+      transform: scale(1.08);
+    }
+
+    .achievement-emoji {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .achievement-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .achievement-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Review Mode */
+    .review-list {
+      max-height: 450px;
+      overflow-y: auto;
+    }
+
+    .review-item {
+      padding: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .review-item:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow);
+    }
+
+    .review-item.correct {
+      border-left: 5px solid var(--success);
+    }
+
+    .review-item.incorrect {
+      border-left: 5px solid var(--error);
+    }
+
+    .review-question {
+      flex: 1;
+    }
+
+    .review-answer {
+      text-align: right;
+      min-width: 160px;
+    }
+
+    .review-your-answer {
+      color: var(--error-light);
+      font-size: 0.95rem;
+      text-decoration: line-through;
+      margin-bottom: 5px;
+    }
+
+    .review-correct-answer {
+      color: var(--success-light);
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-shadow: 0 0 10px var(--success-glow);
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      h1 { font-size: 1.7rem; }
+      .sentence { font-size: 1.15rem; padding: 20px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .buttons { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .question-box { padding: 25px; }
+      .tab-btn { min-width: 85px; padding: 12px 15px; font-size: 0.85rem; }
+      .logo { font-size: 3rem; }
+      .results-emoji { font-size: 4rem; }
+      .results-title { font-size: 1.8rem; }
+    }
+
+    @media (max-width: 450px) {
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .badges { flex-direction: column; align-items: center; }
+      .progress-header { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-light);
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: var(--gradient-1);
+      animation: confettiFall 3.5s linear forwards;
+      pointer-events: none;
+      z-index: 1000;
+      border-radius: 2px;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Input placeholder */
+    ::placeholder {
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+
+    /* Focus visible */
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--primary-light);
+      outline-offset: 3px;
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 25px;
+      box-shadow: var(--shadow-xl);
+      z-index: 2000;
+      animation: toastSlideIn 0.4s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 350px;
+    }
+
+    @keyframes toastSlideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast.success {
+      border-color: var(--success);
+      box-shadow: 0 4px 20px var(--success-glow);
+    }
+
+    .toast.error {
+      border-color: var(--error);
+      box-shadow: 0 4px 20px var(--error-glow);
+    }
+
+    .toast-icon {
+      font-size: 1.5rem;
+    }
+
+    .toast-message {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <div class="container">
+    <header>
+      <div class="logo">🎓</div>
+      <h1>Тренажёр по словообразованию</h1>
+      <div class="subtitle">Подготовка к ОГЭ/ЕГЭ • Английский язык</div>
+      <div class="badges">
+        <span class="badge gold">🏆 ULTRA Версия</span>
+        <span class="badge green">✅ 20 вопросов</span>
+        <span class="badge purple">⏱️ Таймер</span>
+      </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-card correct">
+        <span class="stat-icon">✅</span>
+        <span class="stat-value" id="correctCount">0</span>
+        <div class="stat-label">Правильно</div>
+      </div>
+      <div class="stat-card incorrect">
+        <span class="stat-icon">❌</span>
+        <span class="stat-value" id="incorrectCount">0</span>
+        <div class="stat-label">Ошибок</div>
+      </div>
+      <div class="stat-card streak">
+        <span class="stat-icon">🔥</span>
+        <span class="stat-value" id="streakCount">0</span>
+        <div class="stat-label">Серия</div>
+      </div>
+      <div class="stat-card current">
+        <span class="stat-icon">📍</span>
+        <span class="stat-value" id="currentNum">1</span>
+        <div class="stat-label">Вопрос</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">📊 Прогресс раунда</span>
+        <span class="progress-percent" id="progressPercent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="trainer">🎯 Тренировка</button>
+      <button class="tab-btn" data-tab="dictionary">📚 Словарь</button>
+      <button class="tab-btn" data-tab="rules">📖 Правила</button>
+      <button class="tab-btn" data-tab="achievements">🏅 Достижения</button>
+      <button class="tab-btn" data-tab="review">🔄 Повторение</button>
+    </div>
+
+    <!-- Trainer Tab -->
+    <div id="trainer" class="tab-content active">
+      <!-- Timer -->
+      <div class="timer-box">
+        <span style="font-size: 1.5rem;">⏱️</span>
+        <span class="timer-display" id="timerDisplay">00:00</span>
+        <span style="color: var(--text-muted); font-size: 0.9rem;">(макс. 60 сек на вопрос)</span>
+      </div>
+
+      <!-- Encouragement -->
+      <div class="encouragement" id="encouragement">
+        <div class="encouragement-emoji">🌟</div>
+        <div class="encouragement-text" id="encouragementText">Отлично! Продолжай в том же духе!</div>
+      </div>
+
+      <!-- Question Box -->
+      <div id="questionContainer" class="question-box">
+        <div class="question-number">
+          <span>📝</span>
+          <span>Вопрос <span id="questionNum">1</span> из <span id="totalQuestions">20</span></span>
+        </div>
+        
+        <div class="sentence" id="sentenceText"></div>
+        
+        <div class="translation" id="translation"></div>
+        
+        <input type="text" class="answer-input" id="answerInput" placeholder="Введите пропущенное слово..." autocomplete="off" spellcheck="false">
+        
+        <div class="feedback" id="feedback">
+          <div class="feedback-title" id="feedbackTitle"></div>
+          <div class="feedback-explanation" id="feedbackExplanation"></div>
+        </div>
+        
+        <div class="buttons">
+          <button class="btn-warning" id="skipBtn">⏭ Пропустить</button>
+          <button class="btn-success" id="checkBtn">✓ Проверить</button>
+          <button class="btn-primary btn-hidden" id="nextBtn">➡ Далее</button>
+        </div>
+      </div>
+
+      <button class="btn-secondary" id="homeBtn" style="width: 100%; margin-top: 15px;">🏠 На главную / Рестарт</button>
+    </div>
+
+    <!-- Dictionary Tab -->
+    <div id="dictionary" class="tab-content">
+      <input type="text" class="search-box" id="searchDict" placeholder="🔍 Поиск по слову, переводу или типу...">
+      <div class="dictionary-list" id="dictList"></div>
+    </div>
+
+    <!-- Rules Tab -->
+    <div id="rules" class="tab-content">
+      <div class="rules-grid">
+        <div class="rule-card">
+          <div class="rule-title">📝 Существительные (-tion, -ment)</div>
+          <div class="rule-content">
+            Для образования существительных от глаголов часто используются суффиксы <strong>-tion</strong> и <strong>-ment</strong>.
+          </div>
+          <div class="rule-example">
+            create → creation<br>
+            develop → development<br>
+            argue → argument
+          </div>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-title">📝 Прилагательные (-ful, -less, -able)</div>
+          <div class="rule-content">
+            Суффиксы <strong>-ful</strong> (полный), <strong>-less</strong> (без), <strong>-able</strong> (способный).
+          </div>
+          <div class="rule-example">
+            care → careful / careless<br>
+            comfort → comfortable<br>
+            help → helpful / helpless
+          </div>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-title">📝 Наречия (-ly)</div>
+          <div class="rule-content">
+            Для образования наречий от прилагательных добавляется суффикс <strong>-ly</strong>.
+          </div>
+          <div class="rule-example">
+            quick → quickly<br>
+            careful → carefully<br>
+            happy → happily
+          </div>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-title">📝 Отрицание (un-, in-, im-)</div>
+          <div class="rule-content">
+            Приставки <strong>un-</strong>, <strong>in-</strong>, <strong>im-</strong> дают отрицательное значение.
+          </div>
+          <div class="rule-example">
+            happy → unhappy<br>
+            possible → impossible<br>
+            correct → incorrect
+          </div>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-title">📝 Существительные (-ness, -ity)</div>
+          <div class="rule-content">
+            Суффиксы <strong>-ness</strong> и <strong>-ity</strong> образуют абстрактные существительные.
+          </div>
+          <div class="rule-example">
+            happy → happiness<br>
+            active → activity<br>
+            kind → kindness
+          </div>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-title">📝 Прилагательные (-ous, -ive)</div>
+          <div class="rule-content">
+            Суффиксы <strong>-ous</strong> и <strong>-ive</strong> образуют прилагательные.
+          </div>
+          <div class="rule-example">
+            danger → dangerous<br>
+            create → creative<br>
+            success → successful
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Tab -->
+    <div id="achievements" class="tab-content">
+      <div class="achievements-grid" id="achievementsList"></div>
+    </div>
+
+    <!-- Review Tab -->
+    <div id="review" class="tab-content">
+      <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <h3 style="color: var(--text-primary); font-size: 1.3rem;">📋 История ответов</h3>
+        <button class="btn-secondary" id="clearReviewBtn">🗑 Очистить</button>
+      </div>
+      <div class="review-list" id="reviewList">
+        <p style="text-align: center; color: var(--text-muted); padding: 50px; font-size: 1.1rem;">Нет сохранённых ответов. Пройдите тренировку!</p>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="results-screen">
+      <div class="results-emoji" id="resultsEmoji">🎉</div>
+      <h2 class="results-title" id="resultsTitle">Раунд завершён!</h2>
+      <p class="results-subtitle" id="resultsSubtitle">Отличная работа!</p>
+      
+      <div class="results-grid">
+        <div class="result-card correct">
+          <span class="result-icon">✅</span>
+          <span class="result-value" id="finalCorrect">0</span>
+          <div class="result-label">Правильно</div>
+        </div>
+        <div class="result-card incorrect">
+          <span class="result-icon">❌</span>
+          <span class="result-value" id="finalIncorrect">0</span>
+          <div class="result-label">Ошибок</div>
+        </div>
+        <div class="result-card percent">
+          <span class="result-icon">📊</span>
+          <span class="result-value" id="finalPercent">0%</span>
+          <div class="result-label">Точность</div>
+        </div>
+        <div class="result-card time">
+          <span class="result-icon">⏱️</span>
+          <span class="result-value" id="finalTime">0:00</span>
+          <div class="result-label">Время</div>
+        </div>
+      </div>
+      
+      <div class="results-message" id="resultsMessage"></div>
+      
+      <div class="results-actions">
+        <button class="btn-success" id="restartBtn">🔄 Новый раунд</button>
+        <button class="btn-primary" id="reviewBtn">📋 Обзор ошибок</button>
+        <button class="btn-secondary" id="homeBtn2">🏠 На главную</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== БАЗА ВОПРОСОВ (20 вариантов) ====================
+    const questionsDB = [
+      { id: 1, sentence: "She is a very _____ person. (FRIEND)", answer: "friendly", translation: "Она очень дружелюбный человек.", type: "adj" },
+      { id: 2, sentence: "The _____ of the mountain was breathtaking. (HIGH)", answer: "height", translation: "Высота горы была захватывающей.", type: "noun" },
+      { id: 3, sentence: "He showed great _____ during the interview. (CONFIDENT)", answer: "confidence", translation: "Он проявил большую уверенность во время собеседования.", type: "noun" },
+      { id: 4, sentence: "This is a _____ decision. (REASON)", answer: "reasonable", translation: "Это разумное решение.", type: "adj" },
+      { id: 5, sentence: "The _____ of the story surprised everyone. (END)", answer: "ending", translation: "Концовка истории удивила всех.", type: "noun" },
+      { id: 6, sentence: "She speaks English _____. (FLUENT)", answer: "fluently", translation: "Она свободно говорит по-английски.", type: "adv" },
+      { id: 7, sentence: "We need more _____ information. (RELY)", answer: "reliable", translation: "Нам нужна более надёжная информация.", type: "adj" },
+      { id: 8, sentence: "His _____ helped him solve the problem. (CREATE)", answer: "creativity", translation: "Его креативность помогла ему решить проблему.", type: "noun" },
+      { id: 9, sentence: "The weather was _____ cold yesterday. (EXTREME)", answer: "extremely", translation: "Вчера было чрезвычайно холодно.", type: "adv" },
+      { id: 10, sentence: "This task requires _____. (PRECISE)", answer: "precision", translation: "Это задание требует точности.", type: "noun" },
+      { id: 11, sentence: "She made a _____ choice. (WISE)", answer: "wise", translation: "Она сделала мудрый выбор.", type: "adj" },
+      { id: 12, sentence: "The _____ of the building is amazing. (DESIGN)", answer: "design", translation: "Дизайн здания потрясающий.", type: "noun" },
+      { id: 13, sentence: "He acted very _____. (RESPONSIBLE)", answer: "responsibly", translation: "Он вёл себя очень ответственно.", type: "adv" },
+      { id: 14, sentence: "There was a _____ improvement in his work. (NOTICE)", answer: "noticeable", translation: "Было заметное улучшение в его работе.", type: "adj" },
+      { id: 15, sentence: "The _____ of the project was delayed. (COMPLETE)", answer: "completion", translation: "Завершение проекта было отложено.", type: "noun" },
+      { id: 16, sentence: "She has a very _____ personality. (ATTRACT)", answer: "attractive", translation: "У неё очень привлекательная личность.", type: "adj" },
+      { id: 17, sentence: "The _____ of the river is about 200 km. (LONG)", answer: "length", translation: "Длина реки около 200 км.", type: "noun" },
+      { id: 18, sentence: "He answered all questions _____. (CORRECT)", answer: "correctly", translation: "Он ответил на все вопросы правильно.", type: "adv" },
+      { id: 19, sentence: "This is a _____ opportunity. (UNIQUE)", answer: "unique", translation: "Это уникальная возможность.", type: "adj" },
+      { id: 20, sentence: "The _____ of the team was excellent. (PERFORM)", answer: "performance", translation: "Выступление команды было отличным.", type: "noun" }
+    ];
+
+    // ==================== ДОСТИЖЕНИЯ ====================
+    const achievements = [
+      { id: "first_correct", name: "Первый успех", desc: "Первый правильный ответ", emoji: "🎯", requirement: (s) => s.correct >= 1 },
+      { id: "streak_3", name: "Разогрев", desc: "3 правильных подряд", emoji: "🔥", requirement: (s) => s.maxStreak >= 3 },
+      { id: "streak_5", name: "В ударе", desc: "5 правильных подряд", emoji: "⚡", requirement: (s) => s.maxStreak >= 5 },
+      { id: "streak_10", name: "Непобедимый", desc: "10 правильных подряд", emoji: "👑", requirement: (s) => s.maxStreak >= 10 },
+      { id: "perfect_round", name: "Идеальный раунд", desc: "20/20 правильных", emoji: "💎", requirement: (s) => s.correct === 20 && s.incorrect === 0 },
+      { id: "speed_master", name: "Скорострел", desc: "Завершить за < 5 минут", emoji: "🚀", requirement: (s) => s.totalTime < 300 },
+      { id: "comeback", name: "Возвращение", desc: "Исправить 5 ошибок", emoji: "💪", requirement: (s) => s.incorrect >= 5 && s.correct >= 15 },
+      { id: "veteran", name: "Ветеран", desc: "Пройти 100 вопросов", emoji: "🏅", requirement: (s) => s.totalAnswered >= 100 }
+    ];
+
+    // ==================== СОСТОЯНИЕ ПРИЛОЖЕНИЯ ====================
+    let state = {
+      questions: [],
+      currentIndex: 0,
+      correct: 0,
+      incorrect: 0,
+      streak: 0,
+      maxStreak: 0,
+      currentStreak: 0,
+      answeredWords: new Set(),
+      totalTime: 0,
+      questionStartTime: 0,
+      timerInterval: null,
+      reviewHistory: [],
+      unlockedAchievements: [],
+      totalAnswered: 0
+    };
+
+    // ==================== DOM ЭЛЕМЕНТЫ ====================
+    const els = {
+      correctCount: document.getElementById('correctCount'),
+      incorrectCount: document.getElementById('incorrectCount'),
+      streakCount: document.getElementById('streakCount'),
+      currentNum: document.getElementById('currentNum'),
+      progressFill: document.getElementById('progressFill'),
+      progressPercent: document.getElementById('progressPercent'),
+      timerDisplay: document.getElementById('timerDisplay'),
+      sentence: document.getElementById('sentenceText'),
+      translation: document.getElementById('translation'),
+      input: document.getElementById('answerInput'),
+      feedback: document.getElementById('feedback'),
+      feedbackTitle: document.getElementById('feedbackTitle'),
+      feedbackExplanation: document.getElementById('feedbackExplanation'),
+      questionNum: document.getElementById('questionNum'),
+      totalQuestions: document.getElementById('totalQuestions'),
+      checkBtn: document.getElementById('checkBtn'),
+      skipBtn: document.getElementById('skipBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      homeBtn: document.getElementById('homeBtn'),
+      homeBtn2: document.getElementById('homeBtn2'),
+      encouragement: document.getElementById('encouragement'),
+      encouragementText: document.getElementById('encouragementText'),
+      questionContainer: document.getElementById('questionContainer'),
+      resultsScreen: document.getElementById('resultsScreen'),
+      resultsEmoji: document.getElementById('resultsEmoji'),
+      resultsTitle: document.getElementById('resultsTitle'),
+      resultsSubtitle: document.getElementById('resultsSubtitle'),
+      finalCorrect: document.getElementById('finalCorrect'),
+      finalIncorrect: document.getElementById('finalIncorrect'),
+      finalPercent: document.getElementById('finalPercent'),
+      finalTime: document.getElementById('finalTime'),
+      resultsMessage: document.getElementById('resultsMessage'),
+      restartBtn: document.getElementById('restartBtn'),
+      reviewBtn: document.getElementById('reviewBtn'),
+      dictList: document.getElementById('dictList'),
+      searchDict: document.getElementById('searchDict'),
+      reviewList: document.getElementById('reviewList'),
+      clearReviewBtn: document.getElementById('clearReviewBtn'),
+      achievementsList: document.getElementById('achievementsList'),
+      tabBtns: document.querySelectorAll('.tab-btn'),
+      tabContents: document.querySelectorAll('.tab-content'),
+      bgParticles: document.getElementById('bgParticles')
+    };
+
+    // ==================== ФОНОВЫЕ ЧАСТИЦЫ ====================
+    function createParticles() {
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        els.bgParticles.appendChild(particle);
+      }
+    }
+
+    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+    function init() {
+      createParticles();
+      loadFromStorage();
+      shuffleQuestions();
+      renderQuestion();
+      renderDictionary();
+      renderAchievements();
+      renderReview();
+      updateStatsDisplay();
+      setupEventListeners();
+      startTimer();
+    }
+
+    function shuffleQuestions() {
+      state.questions = [...questionsDB].sort(() => Math.random() - 0.5);
+    }
+
+    // ==================== ТАЙМЕР ====================
+    function startTimer() {
+      state.questionStartTime = Date.now();
+      
+      if (state.timerInterval) clearInterval(state.timerInterval);
+      
+      state.timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - state.questionStartTime) / 1000);
+        state.totalTime = elapsed;
+        
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        els.timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        
+        if (seconds >= 45) {
+          els.timerDisplay.classList.add('timer-warning');
+        } else {
+          els.timerDisplay.classList.remove('timer-warning');
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+      }
+    }
+
+    // ==================== ОТРИСОВКА ВОПРОСА ====================
+    function renderQuestion() {
+      if (state.currentIndex >= state.questions.length) {
+        showResults();
+        return;
+      }
+
+      const q = state.questions[state.currentIndex];
+      const parts = q.sentence.split('_____');
+      els.sentence.innerHTML = `${parts[0]}<span class="gap"></span>${parts[1] || ''}`;
+      els.translation.textContent = q.translation;
+      els.input.value = '';
+      els.input.className = 'answer-input';
+      els.input.disabled = false;
+      els.feedback.className = 'feedback';
+      els.feedbackTitle.textContent = '';
+      els.feedbackExplanation.textContent = '';
+      
+      // Кнопка "Проверить" - АКТИВНА
+      els.checkBtn.classList.remove('btn-hidden');
+      els.checkBtn.classList.add('btn-visible');
+      els.checkBtn.disabled = false;
+      
+      // Кнопка "Далее" - СКРЫТА
+      els.nextBtn.classList.remove('btn-visible');
+      els.nextBtn.classList.add('btn-hidden');
+      els.nextBtn.disabled = true;
+      
+      // Кнопка "Пропустить" - АКТИВНА
+      els.skipBtn.disabled = false;
+      
+      els.input.focus();
+      els.currentNum.textContent = state.currentIndex + 1;
+      els.questionNum.textContent = state.currentIndex + 1;
+      els.totalQuestions.textContent = state.questions.length;
+      
+      const progress = (state.currentIndex / state.questions.length) * 100;
+      els.progressFill.style.width = `${progress}%`;
+      els.progressPercent.textContent = `${Math.round(progress)}%`;
+      
+      startTimer();
+      checkAchievements();
+    }
+
+    // ==================== ПРОВЕРКА ОТВЕТА ====================
+    function checkAnswer() {
+      const userAnswer = els.input.value.trim().toLowerCase();
+      const q = state.questions[state.currentIndex];
+      const isCorrect = userAnswer === q.answer.toLowerCase();
+      
+      stopTimer();
+      els.input.disabled = true;
+      els.checkBtn.disabled = true;
+      els.skipBtn.disabled = true;
+      
+      state.reviewHistory.push({
+        questionId: q.id,
+        sentence: q.sentence,
+        userAnswer: userAnswer || '(пусто)',
+        correctAnswer: q.answer,
+        isCorrect: isCorrect,
+        timeSpent: Math.floor((Date.now() - state.questionStartTime) / 1000)
+      });
+      
+      state.totalAnswered++;
+      
+      if (isCorrect) {
+        state.correct++;
+        state.currentStreak++;
+        state.maxStreak = Math.max(state.maxStreak, state.currentStreak);
+        state.answeredWords.add(q.id);
+        els.input.classList.add('correct');
+        els.feedback.className = 'feedback correct show';
+        els.feedbackTitle.textContent = '✅ Правильно!';
+        els.feedbackExplanation.textContent = `Отлично! "${q.answer}" — верный ответ.`;
+        playSound('correct');
+        showToast('success', 'Правильный ответ! 🎉');
+      } else {
+        state.incorrect++;
+        state.currentStreak = 0;
+        els.input.classList.add('incorrect');
+        els.feedback.className = 'feedback incorrect show';
+        els.feedbackTitle.textContent = '❌ Неверно';
+        els.feedbackExplanation.textContent = `Правильный ответ: ${q.answer}. Не сдавайся!`;
+        playSound('incorrect');
+        showToast('error', 'Попробуй ещё раз! 💪');
+      }
+      
+      els.correctCount.textContent = state.correct;
+      els.incorrectCount.textContent = state.incorrect;
+      els.streakCount.textContent = state.currentStreak;
+      
+      els.nextBtn.classList.remove('btn-hidden');
+      els.nextBtn.classList.add('btn-visible');
+      els.nextBtn.disabled = false;
+      els.nextBtn.focus();
+      
+      if (state.currentStreak === 3 || state.currentStreak === 5 || state.currentStreak === 10) {
+        showEncouragement(`🔥 Серия: ${state.currentStreak} правильных подряд!`);
+      }
+      
+      saveToStorage();
+      updateStatsDisplay();
+      renderReview();
+    }
+
+    function skipQuestion() {
+      const q = state.questions[state.currentIndex];
+      state.incorrect++;
+      state.currentStreak = 0;
+      
+      state.reviewHistory.push({
+        questionId: q.id,
+        sentence: q.sentence,
+        userAnswer: '(пропущено)',
+        correctAnswer: q.answer,
+        isCorrect: false,
+        timeSpent: Math.floor((Date.now() - state.questionStartTime) / 1000)
+      });
+      
+      state.totalAnswered++;
+      
+      els.incorrectCount.textContent = state.incorrect;
+      els.streakCount.textContent = state.currentStreak;
+      
+      showToast('error', 'Вопрос пропущен');
+      nextQuestion();
+      saveToStorage();
+      updateStatsDisplay();
+      renderReview();
+    }
+
+    function nextQuestion() {
+      els.encouragement.classList.remove('show');
+      state.currentIndex++;
+      renderQuestion();
+    }
+
+    // ==================== ПОДДЕРЖКА ====================
+    function showEncouragement(text) {
+      const messages = [
+        "🌟 Отлично! Продолжай в том же духе!",
+        "💪 Ты справляешься великолепно!",
+        "✨ Каждый ответ делает тебя лучше!",
+        "🚀 Прогресс налицо! Так держать!",
+        "🎯 Точность растёт! Молодец!",
+        "🏆 Ты настоящий чемпион!",
+        "⭐ Звёздный результат!",
+        "🔥 Горячая серия! Не останавливайся!"
+      ];
+      
+      els.encouragementText.textContent = text || messages[Math.floor(Math.random() * messages.length)];
+      els.encouragement.classList.add('show');
+      setTimeout(() => els.encouragement.classList.remove('show'), 3500);
+    }
+
+    // ==================== TOAST УВЕДОМЛЕНИЯ ====================
+    function showToast(type, message) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span>
+        <span class="toast-message">${message}</span>
+      `;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'toastSlideIn 0.4s ease reverse';
+        setTimeout(() => toast.remove(), 400);
+      }, 2500);
+    }
+
+    // ==================== РЕЗУЛЬТАТЫ ====================
+    function showResults() {
+      stopTimer();
+      els.questionContainer.style.display = 'none';
+      els.resultsScreen.classList.add('show');
+      
+      const total = state.correct + state.incorrect;
+      const percent = total > 0 ? Math.round((state.correct / total) * 100) : 0;
+      
+      els.finalCorrect.textContent = state.correct;
+      els.finalIncorrect.textContent = state.incorrect;
+      els.finalPercent.textContent = `${percent}%`;
+      
+      const minutes = Math.floor(state.totalTime / 60);
+      const seconds = state.totalTime % 60;
+      els.finalTime.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+      
+      if (percent >= 90) {
+        els.resultsEmoji.textContent = '🏆';
+        els.resultsTitle.textContent = 'Потрясающе!';
+        els.resultsSubtitle.textContent = 'Ты готов к экзамену!';
+        els.resultsMessage.textContent = '🎉 Феноменальный результат! Ты настоящий эксперт в словообразовании!';
+        createConfetti();
+        showToast('success', 'Идеальный результат! 🏆');
+      } else if (percent >= 70) {
+        els.resultsEmoji.textContent = '🌟';
+        els.resultsTitle.textContent = 'Отличная работа!';
+        els.resultsSubtitle.textContent = 'Продолжай тренироваться!';
+        els.resultsMessage.textContent = '👍 Очень хороший результат! Ещё немного практики — и будет идеально!';
+        showToast('success', 'Хорошая работа! 🌟');
+      } else if (percent >= 50) {
+        els.resultsEmoji.textContent = '👍';
+        els.resultsTitle.textContent = 'Хороший старт!';
+        els.resultsSubtitle.textContent = 'Есть прогресс!';
+        els.resultsMessage.textContent = '💪 Ты на правильном пути! Больше практики — и результаты улучшатся!';
+      } else {
+        els.resultsEmoji.textContent = '💪';
+        els.resultsTitle.textContent = 'Не сдавайся!';
+        els.resultsSubtitle.textContent = 'Практика приведёт к совершенству!';
+        els.resultsMessage.textContent = '📚 Каждая ошибка — это шаг к успеху. Попробуй ещё раз!';
+      }
+      
+      checkAchievements();
+      saveToStorage();
+    }
+
+    function restartRound() {
+      state.currentIndex = 0;
+      state.correct = 0;
+      state.incorrect = 0;
+      state.currentStreak = 0;
+      state.totalTime = 0;
+      
+      shuffleQuestions();
+      
+      els.resultsScreen.classList.remove('show');
+      els.questionContainer.style.display = 'block';
+      
+      document.querySelector('[data-tab="trainer"]').click();
+      
+      els.correctCount.textContent = '0';
+      els.incorrectCount.textContent = '0';
+      els.streakCount.textContent = '0';
+      
+      renderQuestion();
+      updateStatsDisplay();
+      
+      showToast('success', 'Новый раунд начался! 🚀');
+    }
+
+    // ==================== СТАТИСТИКА И СЛОВАРЬ ====================
+    function updateStatsDisplay() {
+      els.correctCount.textContent = state.correct;
+      els.incorrectCount.textContent = state.incorrect;
+      els.streakCount.textContent = state.currentStreak;
+    }
+
+    function renderDictionary(filter = '') {
+      const filtered = questionsDB.filter(q => 
+        q.answer.toLowerCase().includes(filter.toLowerCase()) ||
+        q.translation.toLowerCase().includes(filter.toLowerCase()) ||
+        q.type.toLowerCase().includes(filter.toLowerCase())
+      );
+      
+      const typeLabels = { noun: 'Сущ.', adj: 'Прил.', adv: 'Нареч.', verb: 'Глаг.' };
+      
+      els.dictList.innerHTML = filtered.map(q => `
+        <div class="dict-item">
+          <div class="dict-left">
+            <div class="dict-word">${q.answer}</div>
+            <span class="dict-type">${typeLabels[q.type] || q.type}</span>
+          </div>
+          <div class="dict-right">
+            <div class="dict-translation">${q.translation}</div>
+            <div class="dict-example">${q.sentence.replace('_____', '___')}</div>
+          </div>
+          <div class="dict-learned">${state.answeredWords.has(q.id) ? '✅' : ''}</div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== ДОСТИЖЕНИЯ ====================
+    function renderAchievements() {
+      els.achievementsList.innerHTML = achievements.map(a => {
+        const unlocked = state.unlockedAchievements.includes(a.id);
+        return `
+          <div class="achievement-card ${unlocked ? 'unlocked' : ''}">
+            <div class="achievement-emoji">${a.emoji}</div>
+            <div class="achievement-name">${a.name}</div>
+            <div class="achievement-desc">${a.desc}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function checkAchievements() {
+      const newAchievements = achievements.filter(a => 
+        a.requirement(state) && !state.unlockedAchievements.includes(a.id)
+      );
+      
+      newAchievements.forEach(a => {
+        state.unlockedAchievements.push(a.id);
+        showEncouragement(`🏅 Новое достижение: ${a.name}!`);
+        playSound('achievement');
+        showToast('success', `Достижение: ${a.name}! 🏅`);
+      });
+      
+      if (newAchievements.length > 0) {
+        renderAchievements();
+        saveToStorage();
+      }
+    }
+
+    // ==================== ПОВТОРЕНИЕ ====================
+    function renderReview() {
+      if (state.reviewHistory.length === 0) {
+        els.reviewList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 50px; font-size: 1.1rem;">Нет сохранённых ответов. Пройдите тренировку!</p>';
+        return;
+      }
+      
+      const recent = state.reviewHistory.slice(-20).reverse();
+      
+      els.reviewList.innerHTML = recent.map(r => `
+        <div class="review-item ${r.isCorrect ? 'correct' : 'incorrect'}">
+          <div class="review-question">
+            <div style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 8px;">${r.sentence}</div>
+            ${!r.isCorrect ? `<div class="review-your-answer">Ваш ответ: ${r.userAnswer}</div>` : ''}
+          </div>
+          <div class="review-answer">
+            <div class="review-correct-answer">${r.correctAnswer}</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">⏱️ ${r.timeSpent}с</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function clearReview() {
+      state.reviewHistory = [];
+      renderReview();
+      saveToStorage();
+      showToast('success', 'История очищена! 🗑');
+    }
+
+    // ==================== LOCAL STORAGE ====================
+    function saveToStorage() {
+      const data = {
+        correct: state.correct,
+        incorrect: state.incorrect,
+        maxStreak: state.maxStreak,
+        answeredWords: Array.from(state.answeredWords),
+        unlockedAchievements: state.unlockedAchievements,
+        reviewHistory: state.reviewHistory,
+        totalAnswered: state.totalAnswered
+      };
+      localStorage.setItem('wordFormationUltra', JSON.stringify(data));
+    }
+
+    function loadFromStorage() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('wordFormationUltra'));
+        if (saved) {
+          state.correct = saved.correct || 0;
+          state.incorrect = saved.incorrect || 0;
+          state.maxStreak = saved.maxStreak || 0;
+          state.answeredWords = new Set(saved.answeredWords || []);
+          state.unlockedAchievements = saved.unlockedAchievements || [];
+          state.reviewHistory = saved.reviewHistory || [];
+          state.totalAnswered = saved.totalAnswered || 0;
+        }
+      } catch (e) {
+        console.log('Нет сохранённых данных');
+      }
+    }
+
+    // ==================== ЗВУКИ ====================
+    function playSound(type) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (type === 'correct') {
+          oscillator.frequency.value = 523.25;
+          oscillator.type = 'sine';
+          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.3);
+        } else if (type === 'incorrect') {
+          oscillator.frequency.value = 196;
+          oscillator.type = 'sawtooth';
+          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.4);
+        } else if (type === 'achievement') {
+          oscillator.frequency.value = 659.25;
+          oscillator.type = 'triangle';
+          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.5);
+        }
+      } catch (e) {
+        // Звуки не поддерживаются
+      }
+    }
+
+    // ==================== КОНФЕТТИ ====================
+    function createConfetti() {
+      const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#d946ef'];
+      
+      for (let i = 0; i < 80; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 5000);
+        }, i * 40);
+      }
+    }
+
+    // ==================== ОБРАБОТЧИКИ СОБЫТИЙ ====================
+    function setupEventListeners() {
+      els.checkBtn.addEventListener('click', checkAnswer);
+      els.skipBtn.addEventListener('click', skipQuestion);
+      els.nextBtn.addEventListener('click', nextQuestion);
+      els.restartBtn.addEventListener('click', restartRound);
+      els.homeBtn2.addEventListener('click', restartRound);
+      els.clearReviewBtn.addEventListener('click', clearReview);
+      
+      els.homeBtn.addEventListener('click', function() {
+        restartRound();
+      });
+      
+      els.reviewBtn.addEventListener('click', () => {
+        els.resultsScreen.classList.remove('show');
+        els.questionContainer.style.display = 'block';
+        document.querySelector('[data-tab="review"]').click();
+      });
+      
+      els.input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !els.input.disabled && !els.checkBtn.disabled) {
+          checkAnswer();
+        } else if (e.key === 'Enter' && !els.nextBtn.disabled && els.nextBtn.classList.contains('btn-visible')) {
+          nextQuestion();
+        }
+      });
+      
+      els.tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          els.tabBtns.forEach(b => b.classList.remove('active'));
+          els.tabContents.forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+      });
+      
+      els.searchDict.addEventListener('input', (e) => {
+        renderDictionary(e.target.value);
+      });
+    }
+
+    // ==================== ЗАПУСК ====================
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
+
